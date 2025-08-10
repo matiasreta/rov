@@ -12,7 +12,7 @@ export default function HomeScreen({ onStartGame, playerStats, discoveredSpecies
         <div className="ocean-overlay"></div>
         <div className="content-container">
           <div className="title-section">
-            <h1 className="main-title">MARDEL ROV</h1>
+            <h1 className="main-title">Underwater Oases of Mar Del Plata</h1>
             <p className="subtitle">Explora las profundidades del océano</p>
             <p className="description">Sumérgete en una aventura submarina única. Controla tu ROV y descubre las maravillas ocultas en las profundidades del MAR DEL PLATA.</p>
           </div>

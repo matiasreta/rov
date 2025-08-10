@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useRef } from "react";
 import { Color } from "three";
 import OceanFloor from "../components/OceanFloor";
 import ROVVehicle from "../components/ROVVehicle";
