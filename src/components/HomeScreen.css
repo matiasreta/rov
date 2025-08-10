@@ -13,8 +13,8 @@
   background-size: cover;
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .ocean-overlay {
@@ -23,25 +23,27 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(58, 58, 58, 0.452);
+  background: rgba(58, 58, 58, 0.178);
 }
 
 .content-container {
-  text-align: center;
+  text-align: right;
   z-index: 10;
   max-width: 600px;
-  padding: 0;
+  padding: 3rem;
   color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 3rem;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
 }
 
 .title-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 1rem;
 }
 
@@ -51,7 +53,6 @@
   margin: 0;
   color: #ffd900;
   text-transform: uppercase;
-  letter-spacing: 8px;
   font-family: 'Arial Black', sans-serif;
 }
 
@@ -71,13 +72,15 @@
   color: #ffffff;
   max-width: 500px;
   font-weight: 300;
+  text-align: right;
 }
 
 .button-section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: center;
+  gap: 1rem;
+  align-items: flex-end;
+  width: 280px;
 }
 
 .explore-button {
@@ -92,14 +95,17 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   font-family: 'Arial Black', sans-serif;
-  min-width: 280px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .explore-button:hover {
   background: #FFFF00;
   border-radius: 0px;
 }
-
 
 .button-text {
   position: relative;
@@ -108,9 +114,9 @@
 
 .menu-buttons {
   display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
 .menu-button {
@@ -127,10 +133,12 @@
   font-size: 0.9rem;
   transition: all 0.3s ease;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
-  min-width: 140px;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  height: 60px;
   backdrop-filter: blur(5px);
 }
 
@@ -155,7 +163,6 @@
 @media (max-width: 768px) {
   .main-title {
     font-size: 3.5rem;
-    letter-spacing: 4px;
   }
   
   .subtitle {
@@ -171,12 +178,19 @@
     border-radius: 0px;
     padding: 1.2rem 3rem;
     font-size: 1.2rem;
-    min-width: 240px;
+    width: 100%;
+    height: 55px;
   }
   
   .content-container {
     gap: 2rem;
-    padding: 0 1rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  
+  .button-section {
+    width: 240px;
   }
   
   .menu-buttons {
@@ -184,8 +198,8 @@
   }
   
   .menu-button {
-    min-width: 120px;
     padding: 0.8rem 1.2rem;
+    height: 55px;
   }
   
   .button-icon {
@@ -200,14 +214,24 @@
 @media (max-width: 480px) {
   .main-title {
     font-size: 2.8rem;
-    letter-spacing: 2px;
   }
   
   .explore-button {
     border-radius: 0px;
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
-    min-width: 200px;
+    width: 100%;
+    height: 50px;
+  }
+  
+  .content-container {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .button-section {
+    width: 200px;
   }
   
   .menu-buttons {
@@ -216,10 +240,10 @@
   }
   
   .menu-button {
-    min-width: 100px;
     padding: 0.7rem 1rem;
     flex-direction: row;
     gap: 0.8rem;
+    height: 50px;
   }
   
   .button-icon {
