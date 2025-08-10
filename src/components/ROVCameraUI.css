@@ -1,0 +1,347 @@
+.rov-camera-ui {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+  font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+  color: #00ff41;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ff41;
+  user-select: none;
+}
+
+/* Viewfinder corners */
+.viewfinder-corners {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #00ff41;
+  opacity: 0.8;
+}
+
+.corner.top-left {
+  top: 20px;
+  left: 20px;
+  border-right: none;
+  border-bottom: none;
+  box-shadow: inset -2px -2px 0 #00ff41;
+}
+
+.corner.top-right {
+  top: 20px;
+  right: 20px;
+  border-left: none;
+  border-bottom: none;
+  box-shadow: inset 2px -2px 0 #00ff41;
+}
+
+.corner.bottom-left {
+  bottom: 20px;
+  left: 20px;
+  border-right: none;
+  border-top: none;
+  box-shadow: inset -2px 2px 0 #00ff41;
+}
+
+.corner.bottom-right {
+  bottom: 20px;
+  right: 20px;
+  border-left: none;
+  border-top: none;
+  box-shadow: inset 2px 2px 0 #00ff41;
+}
+
+/* Technical data overlay - Updated for new container */
+.controls-and-data .technical-data {
+  position: relative;
+  top: auto;
+  left: auto;
+  background: rgba(0, 20, 30, 0.85);
+  padding: 15px;
+  border: 1px solid #00ff41;
+  border-radius: 0;
+  backdrop-filter: blur(2px);
+  min-width: 200px;
+}
+
+.data-line {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+/* Controls and Data Container */
+.controls-and-data {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 300px;
+}
+
+/* Controls Section */
+.controls-section {
+  background: rgba(0, 20, 30, 0.85);
+  padding: 15px;
+  border: 1px solid #00ff41;
+  border-radius: 0;
+  backdrop-filter: blur(2px);
+  min-width: 200px;
+}
+
+.controls-title {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 5px #00ff41;
+  letter-spacing: 0.5px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.control-key {
+  background: rgba(0, 255, 65, 0.2);
+  border: 1px solid #00ff41;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+  min-width: 40px;
+  text-align: center;
+  color: #00ff41;
+  text-shadow: 0 0 3px #00ff41;
+}
+
+.control-desc {
+  color: #00ccff;
+  text-shadow: 0 0 3px #00ccff;
+}
+
+/* REC indicator */
+.rec-indicator {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 20, 30, 0.85);
+  padding: 10px 15px;
+  border: 1px solid #00ff41;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(2px);
+}
+
+.rec-dot {
+  color: #ff0000;
+  font-size: 16px;
+  text-shadow: 0 0 8px #ff0000;
+}
+
+.rec-dot.blink {
+  opacity: 0.3;
+}
+
+.rec-text {
+  font-size: 14px;
+  color: #ff0000;
+  text-shadow: 0 0 5px #ff0000;
+}
+
+/* Species counter */
+.species-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 20, 30, 0.85);
+  padding: 12px 15px;
+  border: 1px solid #00ff41;
+  backdrop-filter: blur(2px);
+  min-width: 200px;
+}
+
+.counter-line {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* Timestamp */
+.timestamp {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 20, 30, 0.85);
+  padding: 10px 15px;
+  border: 1px solid #00ff41;
+  font-size: 13px;
+  letter-spacing: 1px;
+  backdrop-filter: blur(2px);
+}
+
+/* Scan lines effect */
+.scan-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .rov-camera-ui {
+    font-size: 11px;
+  }
+  
+  .controls-and-data {
+    top: 10px;
+    left: 10px;
+    max-width: 250px;
+    gap: 10px;
+  }
+  
+  .controls-section,
+  .controls-and-data .technical-data,
+  .species-counter {
+    min-width: 160px;
+    padding: 10px;
+  }
+  
+  .controls-grid {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  
+  .control-item {
+    font-size: 11px;
+  }
+  
+  .control-key {
+    min-width: 35px;
+    padding: 1px 4px;
+  }
+  
+  .corner {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .corner.top-left,
+  .corner.top-right {
+    top: 10px;
+  }
+  
+  .corner.bottom-left,
+  .corner.bottom-right {
+    bottom: 10px;
+  }
+  
+  .corner.top-left,
+  .corner.bottom-left {
+    left: 10px;
+  }
+  
+  .corner.top-right,
+  .corner.bottom-right {
+    right: 10px;
+  }
+  
+  .rec-indicator {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .species-counter {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .timestamp {
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rov-camera-ui {
+    font-size: 10px;
+  }
+  
+  .controls-and-data {
+    top: 5px;
+    left: 5px;
+    max-width: 200px;
+    gap: 8px;
+  }
+  
+  .controls-section,
+  .controls-and-data .technical-data {
+    padding: 8px;
+    min-width: 140px;
+  }
+  
+  .controls-title {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .control-item {
+    font-size: 10px;
+  }
+  
+  .control-key {
+    min-width: 30px;
+    padding: 1px 3px;
+    font-size: 10px;
+  }
+  
+  .data-line {
+    font-size: 11px;
+  }
+  
+  .counter-line {
+    font-size: 10px;
+  }
+}

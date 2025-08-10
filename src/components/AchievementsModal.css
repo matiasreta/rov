@@ -1,0 +1,223 @@
+.achievements-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.achievements-modal {
+  background: linear-gradient(135deg, #1a3b5c, #2d5a8a);
+  border: 2px solid #ffd900;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.achievements-header {
+  background: #0a1929;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ffd900;
+}
+
+.achievements-header h2 {
+  margin: 0;
+  color: #ffd900;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Arial Black', sans-serif;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ffd900;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.close-button:hover {
+  background: rgba(255, 217, 0, 0.1);
+}
+
+.achievements-list {
+  padding: 2rem;
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.achievement-item.unlocked {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 217, 0, 0.3);
+}
+
+.achievement-item.locked {
+  background: rgba(128, 128, 128, 0.1);
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  filter: grayscale(70%);
+  opacity: 0.7;
+}
+
+.achievement-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.achievement-icon {
+  font-size: 2.5rem;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.achievement-content {
+  flex: 1;
+}
+
+.achievement-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.achievement-item.unlocked .achievement-name {
+  color: #ffd900;
+}
+
+.check-mark {
+  color: #4caf50;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.lock-icon {
+  color: #888;
+  font-size: 1rem;
+}
+
+.achievement-description {
+  color: #cccccc;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.achievement-item.locked .achievement-description {
+  color: #888;
+}
+
+.achievement-progress {
+  font-size: 0.9rem;
+  color: #ffd900;
+  font-weight: bold;
+  background: rgba(255, 217, 0, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  display: inline-block;
+  border: 1px solid rgba(255, 217, 0, 0.3);
+}
+
+.achievement-item.locked .achievement-progress {
+  color: #888;
+  background: rgba(128, 128, 128, 0.1);
+  border-color: rgba(128, 128, 128, 0.3);
+}
+
+/* Scrollbar customization */
+.achievements-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.achievements-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.achievements-list::-webkit-scrollbar-thumb {
+  background: #ffd900;
+  border-radius: 4px;
+}
+
+.achievements-list::-webkit-scrollbar-thumb:hover {
+  background: #ffff00;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .achievements-modal {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .achievements-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .achievements-list {
+    padding: 1rem;
+  }
+  
+  .achievement-item {
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .achievement-icon {
+    font-size: 2rem;
+    min-width: 50px;
+  }
+  
+  .achievement-name {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .achievement-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .achievement-icon {
+    align-self: center;
+  }
+}

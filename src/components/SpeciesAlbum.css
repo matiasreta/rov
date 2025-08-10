@@ -1,0 +1,485 @@
+.species-album-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.species-album {
+  background: linear-gradient(135deg, #1a3b5c, #2d5a8a);
+  border: 2px solid #ffd900;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.album-header {
+  background: #0a1929;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ffd900;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.album-header h2 {
+  margin: 0;
+  color: #ffd900;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Arial Black', sans-serif;
+}
+
+.progress-info {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background: rgba(255, 217, 0, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 217, 0, 0.3);
+}
+
+.species-grid {
+  flex: 1;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  overflow-y: auto;
+  max-height: calc(90vh - 200px);
+}
+
+.species-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.species-card.discovered {
+  border-color: rgba(255, 217, 0, 0.5);
+  background: rgba(255, 217, 0, 0.1);
+}
+
+.species-card.undiscovered {
+  filter: grayscale(80%);
+  opacity: 0.6;
+}
+
+.species-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.species-card.clickable {
+  cursor: pointer;
+}
+
+.species-card.clickable:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(255, 217, 0, 0.2);
+}
+
+.species-depth {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 0.3rem;
+}
+
+.species-image {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.species-icon {
+  font-size: 3rem;
+}
+
+.mystery-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.species-info {
+  flex: 1;
+  width: 100%;
+}
+
+.species-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.species-card.discovered .species-name {
+  color: #ffd900;
+}
+
+.species-rarity {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.discovered-badge {
+  background: #4caf50;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.album-footer {
+  background: #0a1929;
+  padding: 1.5rem;
+  border-top: 2px solid #ffd900;
+}
+
+.completion-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.completion-label {
+  color: #ffffff;
+  font-weight: bold;
+  min-width: 150px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #ffd900);
+  transition: width 0.5s ease;
+}
+
+.completion-percent {
+  color: #ffd900;
+  font-weight: bold;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Scrollbar customization */
+.species-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.species-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.species-grid::-webkit-scrollbar-thumb {
+  background: #ffd900;
+  border-radius: 4px;
+}
+
+.species-grid::-webkit-scrollbar-thumb:hover {
+  background: #ffff00;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .species-album {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .album-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .album-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .species-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .species-card {
+    padding: 1rem;
+  }
+  
+  .species-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .species-icon,
+  .mystery-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .species-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  
+  .completion-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .completion-label {
+    min-width: auto;
+  }
+  
+  .completion-percent {
+    min-width: auto;
+    text-align: center;
+  }
+}
+
+/* Species Detail Modal */
+.species-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.species-detail-card {
+  background: linear-gradient(135deg, #1a3b5c, #2d5a8a);
+  border: 3px solid #ffd900;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.species-detail-header {
+  background: #0a1929;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 2px solid #ffd900;
+}
+
+.species-detail-icon {
+  font-size: 3rem;
+  background: rgba(255, 217, 0, 0.1);
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 217, 0, 0.3);
+}
+
+.species-detail-title {
+  flex: 1;
+}
+
+.species-detail-title h3 {
+  margin: 0 0 0.5rem 0;
+  color: #ffd900;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.scientific-name {
+  margin: 0;
+  color: #aaa;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.close-detail-button {
+  background: none;
+  border: none;
+  color: #ffd900;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.close-detail-button:hover {
+  background: rgba(255, 217, 0, 0.1);
+}
+
+.species-detail-body {
+  padding: 2rem;
+  max-height: calc(90vh - 140px);
+  overflow-y: auto;
+}
+
+.species-detail-section {
+  margin-bottom: 2rem;
+}
+
+.species-detail-section h4 {
+  color: #ffd900;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  border-bottom: 1px solid rgba(255, 217, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.detail-label {
+  color: #ccc;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.detail-value {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.species-description {
+  color: #ddd;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.fun-fact {
+  color: #87ceeb;
+  background: rgba(135, 206, 235, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #87ceeb;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.discovery-points {
+  background: rgba(255, 217, 0, 0.1);
+  border: 2px solid rgba(255, 217, 0, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.points-label {
+  color: #ffd900;
+  font-weight: bold;
+}
+
+.points-value {
+  color: #4caf50;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Responsive for species detail */
+@media (max-width: 768px) {
+  .species-detail-card {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .species-detail-header {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .species-detail-body {
+    padding: 1rem;
+  }
+  
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .species-detail-icon {
+    font-size: 2rem;
+  }
+  
+  .species-detail-title h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .discovery-points {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}

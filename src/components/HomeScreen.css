@@ -1,0 +1,232 @@
+.home-screen {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+}
+
+.home-background {
+  width: 100%;
+  height: 100%;
+  background: url('/src/assets/img/welcome.png') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ocean-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(58, 58, 58, 0.452);
+}
+
+.content-container {
+  text-align: center;
+  z-index: 10;
+  max-width: 600px;
+  padding: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.title-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main-title {
+  font-size: 5rem;
+  font-weight: 900;
+  margin: 0;
+  color: #ffd900;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  font-family: 'Arial Black', sans-serif;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #ffffff;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0;
+  color: #ffffff;
+  max-width: 500px;
+  font-weight: 300;
+}
+
+.button-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.explore-button {
+  background: #ffd900;
+  border: none;
+  border-radius: 0px;
+  padding: 1.5rem 4rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #000000;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Arial Black', sans-serif;
+  min-width: 280px;
+}
+
+.explore-button:hover {
+  background: #FFFF00;
+  border-radius: 0px;
+}
+
+
+.button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.menu-buttons {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.menu-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 217, 0, 0.5);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 140px;
+  backdrop-filter: blur(5px);
+}
+
+.menu-button:hover {
+  background: rgba(255, 217, 0, 0.2);
+  border-color: #ffd900;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 217, 0, 0.3);
+}
+
+.button-icon {
+  font-size: 1.5rem;
+}
+
+.button-label {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 3.5rem;
+    letter-spacing: 4px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+  }
+  
+  .explore-button {
+    border-radius: 0px;
+    padding: 1.2rem 3rem;
+    font-size: 1.2rem;
+    min-width: 240px;
+  }
+  
+  .content-container {
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .menu-buttons {
+    gap: 1rem;
+  }
+  
+  .menu-button {
+    min-width: 120px;
+    padding: 0.8rem 1.2rem;
+  }
+  
+  .button-icon {
+    font-size: 1.2rem;
+  }
+  
+  .button-label {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+  }
+  
+  .explore-button {
+    border-radius: 0px;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    min-width: 200px;
+  }
+  
+  .menu-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .menu-button {
+    min-width: 100px;
+    padding: 0.7rem 1rem;
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+  
+  .button-icon {
+    font-size: 1rem;
+  }
+  
+  .button-label {
+    font-size: 0.6rem;
+  }
+}

@@ -1,0 +1,140 @@
+import { useState, useEffect } from "react";
+import "./ROVCameraUI.css";
+
+export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3 }) {
+  const [timestamp, setTimestamp] = useState("");
+  const [rovData, setRovData] = useState({
+    heading: 0,
+    depth: 0,
+    temp: 3.0,
+    salinity: 34.6,
+    o2Con: 280,
+    o2Sat: 95,
+  });
+  const [recBlink, setRecBlink] = useState(true);
+
+  // Update timestamp every second
+  useEffect(() => {
+    const updateTimestamp = () => {
+      const now = new Date();
+      const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      setTimestamp(utc.toISOString().slice(0, 19).replace("T", " ") + " UTC");
+    };
+
+    updateTimestamp();
+    const interval = setInterval(updateTimestamp, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Blinking REC indicator
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRecBlink((prev) => !prev);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Update ROV data based on position and add realistic fluctuations
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (rovRef?.current) {
+        const position = rovRef.current.position;
+        const rotation = rovRef.current.rotation;
+
+        // Convert Y position to depth (negative Y = deeper)
+        const depth = Math.max(0, Math.abs(position.y) * 10);
+
+        // Convert rotation to heading degrees
+        const heading = ((((rotation.y * 180) / Math.PI) % 360) + 360) % 360;
+
+        setRovData(() => ({
+          heading: Math.round(heading * 10) / 10,
+          depth: Math.round(depth * 10) / 10,
+          temp: Math.round((2.5 + Math.random() * 1.0) * 10) / 10, // 2.5-3.5°C
+          salinity: Math.round((34.5 + Math.random() * 0.2) * 10) / 10, // 34.5-34.7 PSU
+          o2Con: Math.round(270 + Math.random() * 20), // 270-290 μM
+          o2Sat: Math.round(92 + Math.random() * 6), // 92-98%
+        }));
+      }
+    }, 100); // Update 10 times per second for smooth values
+
+    return () => clearInterval(interval);
+  }, [rovRef]);
+
+  return (
+    <div className="rov-camera-ui">
+      {/* Viewfinder corners */}
+      <div className="viewfinder-corners">
+        <div className="corner top-left"></div>
+        <div className="corner top-right"></div>
+        <div className="corner bottom-left"></div>
+        <div className="corner bottom-right"></div>
+      </div>
+
+      {/* Controls and Technical data overlay - Top Left */}
+      <div className="controls-and-data">
+        {/* Controls Section */}
+        <div className="controls-section">
+          <div className="controls-title">🤖 CONTROLES ROV</div>
+          <div className="controls-grid">
+            <div className="control-item">
+              <span className="control-key">W</span>
+              <span className="control-desc">Avanzar</span>
+            </div>
+            <div className="control-item">
+              <span className="control-key">S</span>
+              <span className="control-desc">Retroceder</span>
+            </div>
+            <div className="control-item">
+              <span className="control-key">A</span>
+              <span className="control-desc">Girar Izq</span>
+            </div>
+            <div className="control-item">
+              <span className="control-key">D</span>
+              <span className="control-desc">Girar Der</span>
+            </div>
+            <div className="control-item">
+              <span className="control-key">ESPACIO</span>
+              <span className="control-desc">Subir</span>
+            </div>
+            <div className="control-item">
+              <span className="control-key">SHIFT</span>
+              <span className="control-desc">Bajar</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Technical data section */}
+        <div className="technical-data">
+          <div className="data-line">HEADING: {rovData.heading.toFixed(1)}°</div>
+          <div className="data-line">DEPTH: {rovData.depth.toFixed(1)} m</div>
+          <div className="data-line">TEMP: {rovData.temp.toFixed(1)} °C</div>
+          <div className="data-line">SALINITY: {rovData.salinity.toFixed(1)} PSU</div>
+          <div className="data-line">O2 CON: {rovData.o2Con} μM</div>
+          <div className="data-line">O2 SAT: {rovData.o2Sat} %</div>
+        </div>
+      </div>
+
+      {/* REC indicator - Top Right */}
+      <div className="rec-indicator">
+        <span className={`rec-dot ${recBlink ? "blink" : ""}`}>●</span>
+        <span className="rec-text">REC</span>
+      </div>
+
+      {/* Species counter - Bottom Left */}
+      <div className="species-counter">
+        <div className="counter-line">SPECIES CATALOG</div>
+        <div className="counter-line">
+          DISCOVERED: {speciesCount}/{totalSpecies}
+        </div>
+        <div className="counter-line">STATUS: {speciesCount === totalSpecies ? "COMPLETE" : "SCANNING"}</div>
+      </div>
+
+      {/* Timestamp - Bottom Right */}
+      <div className="timestamp">{timestamp}</div>
+
+      {/* Scan lines effect */}
+      <div className="scan-lines"></div>
+    </div>
+  );
+}
