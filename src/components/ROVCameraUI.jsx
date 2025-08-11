@@ -11,8 +11,6 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
     o2Con: 280,
     o2Sat: 95,
   });
-  const [recBlink, setRecBlink] = useState(true);
-
   // Update timestamp every second
   useEffect(() => {
     const updateTimestamp = () => {
@@ -23,14 +21,6 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
 
     updateTimestamp();
     const interval = setInterval(updateTimestamp, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Blinking REC indicator
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRecBlink((prev) => !prev);
-    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -128,7 +118,7 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
 
       {/* REC indicator - Top Right */}
       <div className="rec-indicator">
-        <span className={`rec-dot ${recBlink ? "blink" : ""}`}>●</span>
+        <span className="rec-dot">●</span>
         <span className="rec-text">REC</span>
       </div>
 
@@ -144,8 +134,6 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
       {/* Timestamp - Bottom Right */}
       <div className="timestamp">{timestamp}</div>
 
-      {/* Scan lines effect */}
-      <div className="scan-lines"></div>
     </div>
   );
 }

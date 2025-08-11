@@ -25,13 +25,13 @@ function App() {
           sessionStartTime: null,
         };
   });
-  const [diveTimer, setDiveTimer] = useState(30);
+  const [diveTimer, setDiveTimer] = useState(120);
   const [isGameActive, setIsGameActive] = useState(false);
   const timerRef = useRef(null);
 
   const handleStartGame = () => {
     setCurrentScreen("game");
-    setDiveTimer(30);
+    setDiveTimer(120);
     setIsGameActive(true);
     setSessionStats((prev) => ({
       ...prev,

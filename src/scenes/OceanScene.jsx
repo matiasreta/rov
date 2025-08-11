@@ -22,12 +22,12 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
       <Canvas
         camera={{
           position: [0, -1, 3],
-          fov: 75,
-          near: 0.1,
-          far: 1000,
+          fov: 80,
+          near: 0.5,
+          far: 35,
         }}
         gl={{
-          clearColor: new Color("#001122"),
+          clearColor: new Color("#000611"),
           antialias: true,
         }}
       >
@@ -35,12 +35,12 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           {/* Cámara primera persona dentro del ROV */}
           <VehicleCamera target={rovRef} offset={[0, 0.2, 0.3]} />
 
-          {/* Iluminación ambiente submarina */}
-          <ambientLight intensity={0.3} color="#004466" />
-          <directionalLight position={[10, 20, 5]} intensity={0.4} color="#0088cc" castShadow />
+          {/* Iluminación ambiente submarina muy limitada */}
+          <ambientLight intensity={0.15} color="#002233" />
+          <directionalLight position={[10, 20, 5]} intensity={0.2} color="#004466" castShadow />
 
-          {/* Niebla para simular profundidad */}
-          <fog attach="fog" args={["#001122", 10, 80]} />
+          {/* Niebla densa para simular visibilidad oceánica limitada */}
+          <fog attach="fog" args={["#000811", 3, 12]} />
 
           {/* Fondo marino personalizado */}
           <CustomOceanFloor />
