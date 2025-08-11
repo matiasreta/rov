@@ -118,18 +118,7 @@ function App() {
       {currentScreen === "home" ? (
         <HomeScreen onStartGame={handleStartGame} playerStats={sessionStats} discoveredSpecies={discoveredSpecies} />
       ) : (
-        <div className="game-container">
-          <div className="game-ui">
-            <button className="back-button" onClick={handleBackToHome}>
-              ← Volver al Inicio
-            </button>
-            <div className="timer-display">
-              <span className="timer-label">TIEMPO:</span>
-              <span className={`timer-value ${diveTimer <= 10 ? "timer-warning" : ""}`}>{diveTimer}s</span>
-            </div>
-          </div>
-          <OceanScene onSpeciesDiscovery={handleSpeciesDiscovery} isGameActive={isGameActive} />
-        </div>
+        <OceanScene onSpeciesDiscovery={handleSpeciesDiscovery} isGameActive={isGameActive} diveTimer={diveTimer} onBackToHome={handleBackToHome} discoveredSpecies={discoveredSpecies} />
       )}
     </div>
   );

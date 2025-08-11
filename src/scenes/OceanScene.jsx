@@ -8,7 +8,7 @@ import VehicleCamera from "../components/VehicleCamera";
 import MarineCreature from "../components/MarineCreature";
 import ROVCameraUI from "../components/ROVCameraUI";
 
-export default function OceanScene({ onSpeciesDiscovery, isGameActive }) {
+export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, discoveredSpecies = [] }) {
   const rovRef = useRef();
 
   const handleSpeciesDiscovered = (speciesName) => {
@@ -58,8 +58,8 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive }) {
         </Suspense>
       </Canvas>
 
-      {/* ROV Camera UI Overlay */}
-      <ROVCameraUI rovRef={rovRef} speciesCount={0} totalSpecies={3} />
+      {/* ROV Camera UI Overlay - Unificado */}
+      <ROVCameraUI rovRef={rovRef} speciesCount={discoveredSpecies.length} totalSpecies={3} diveTimer={diveTimer} onBackToHome={onBackToHome} />
     </div>
   );
 }

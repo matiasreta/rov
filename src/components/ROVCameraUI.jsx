@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./ROVCameraUI.css";
 
-export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3 }) {
+export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3, diveTimer = 30, onBackToHome }) {
   const [timestamp, setTimestamp] = useState("");
   const [rovData, setRovData] = useState({
     heading: 0,
@@ -69,6 +69,17 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
         <div className="corner top-right"></div>
         <div className="corner bottom-left"></div>
         <div className="corner bottom-right"></div>
+      </div>
+
+      {/* Top Bar - Navigation Timer and Back Button */}
+      <div className="top-bar">
+        <button className="back-button" onClick={onBackToHome}>
+          ← Volver al Inicio
+        </button>
+        <div className="timer-display">
+          <span className="timer-label">TIEMPO:</span>
+          <span className={`timer-value ${diveTimer <= 10 ? "timer-warning" : ""}`}>{diveTimer}s</span>
+        </div>
       </div>
 
       {/* Controls and Technical data overlay - Top Left */}
