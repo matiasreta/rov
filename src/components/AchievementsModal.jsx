@@ -1,59 +1,44 @@
-import { logros, getProgressText } from '../data/achievements.js';
-import './AchievementsModal.css';
-
 export default function AchievementsModal({ isOpen, onClose, playerStats }) {
   if (!isOpen) return null;
 
-  const stats = playerStats || {
-    especies: 0,
-    tieneEspecieRara: false,
-    tieneEspecieLegendaria: false,
-    profundidadMax: 0,
-    especiesEnSesion: 0,
-    tiempoJugado: 0
-  };
-
   return (
-    <div className="achievements-modal-overlay" onClick={onClose}>
-      <div className="achievements-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="achievements-header">
-          <h2>LOGROS DE INVESTIGACIÓN</h2>
-          <button className="close-button" onClick={onClose}>✕</button>
-        </div>
-        
-        <div className="achievements-list">
-          {logros.map((logro) => {
-            const isUnlocked = logro.condicion(stats);
-            const progressText = getProgressText(logro, stats);
-            
-            return (
-              <div 
-                key={logro.id} 
-                className={`achievement-item ${isUnlocked ? 'unlocked' : 'locked'}`}
-              >
-                <div className="achievement-icon">
-                  {logro.icono}
-                </div>
-                
-                <div className="achievement-content">
-                  <div className="achievement-name">
-                    {logro.nombre}
-                    {isUnlocked && <span className="check-mark">✓</span>}
-                    {!isUnlocked && <span className="lock-icon">🔒</span>}
-                  </div>
-                  <div className="achievement-description">
-                    {logro.descripcion}
-                  </div>
-                  {progressText && (
-                    <div className="achievement-progress">
-                      {progressText}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000
+    }}>
+      <div style={{
+        backgroundColor: '#001122',
+        padding: '2rem',
+        borderRadius: '10px',
+        color: 'white',
+        maxWidth: '500px',
+        width: '90%'
+      }}>
+        <h2>Logros</h2>
+        <p>¡Explora el océano para desbloquear logros!</p>
+        <p>Especies descubiertas: {playerStats?.speciesDiscovered || 0}/3</p>
+        <button 
+          onClick={onClose}
+          style={{
+            marginTop: '1rem',
+            padding: '0.5rem 1rem',
+            backgroundColor: '#0088cc',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Cerrar
+        </button>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { Suspense, useRef } from "react";
 import { Color } from "three";
-import OceanFloor from "../components/OceanFloor";
+import CustomOceanFloor from "../components/CustomOceanFloor";
 import ROVVehicle from "../components/ROVVehicle";
 import VehicleCamera from "../components/VehicleCamera";
 import MarineCreature from "../components/MarineCreature";
@@ -42,8 +42,8 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive }) {
           {/* Niebla para simular profundidad */}
           <fog attach="fog" args={["#001122", 10, 80]} />
 
-          {/* Fondo marino */}
-          <OceanFloor />
+          {/* Fondo marino personalizado */}
+          <CustomOceanFloor />
 
           {/* ROV con controles de vehículo */}
           <ROVVehicle rovRef={rovRef} />
