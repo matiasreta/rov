@@ -49,9 +49,9 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           <ROVVehicle rovRef={rovRef} />
 
           {/* Criaturas marinas */}
-          <MarineCreature position={[-5, -2, -3]} modelPath="/src/assets/models/Snail.glb" creatureName="Caracol Marino" scale={0.05} onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[4, -1.8, -6]} modelPath="/src/assets/models/seacrab.glb" creatureName="Cangrejo de Mar" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-2, -2.2, -8]} modelPath="/src/assets/models/seacucumber.glb" creatureName="Pepino de Mar" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -7, -7]} modelPath="/src/assets/models/Snail.glb" creatureName="Caracol Marino" scale={0.05} onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -7, -4]} modelPath="/src/assets/models/seacrab.glb" creatureName="Cangrejo de Mar" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -7, -1]} modelPath="/src/assets/models/seacucumber.glb" creatureName="Pepino de Mar" onDiscovered={handleSpeciesDiscovered} />
 
           {/* Ambiente submarino */}
           <Environment preset="dawn" />

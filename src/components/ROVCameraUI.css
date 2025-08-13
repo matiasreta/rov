@@ -7,10 +7,8 @@
   pointer-events: none;
   z-index: 1000;
   font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
-  color: #00ff41;
   font-size: 14px;
   font-weight: bold;
-  text-shadow: 0 0 5px #00ff41;
   user-select: none;
 }
 
@@ -29,8 +27,8 @@
 
 .back-button {
   background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: 2px solid #00ccff;
+  color: #dddddd;
+  border: 2px solid #ffd900;
   border-radius: 6px;
   padding: 10px 20px;
   font-size: 14px;
@@ -40,13 +38,6 @@
   backdrop-filter: blur(10px);
   font-family: inherit;
   text-shadow: none;
-}
-
-.back-button:hover {
-  background: rgba(0, 204, 255, 0.2);
-  border-color: #00ffff;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 204, 255, 0.3);
 }
 
 .timer-display {
@@ -70,14 +61,14 @@
 }
 
 .timer-value {
-  color: #ffffff;
+  color: #dddddd;
   font-weight: 900;
   font-size: 18px;
   font-family: 'Courier New', monospace;
   min-width: 35px;
   text-align: center;
   transition: color 0.3s ease;
-  text-shadow: 0 0 5px #ffffff;
+  text-shadow: 0 0 5px #dddddd;
 }
 
 .timer-warning {
@@ -95,63 +86,14 @@
   }
 }
 
-/* Viewfinder corners */
-.viewfinder-corners {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.corner {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #00ff41;
-  opacity: 0.8;
-}
-
-.corner.top-left {
-  top: 80px;
-  left: 20px;
-  border-right: none;
-  border-bottom: none;
-  box-shadow: inset -2px -2px 0 #00ff41;
-}
-
-.corner.top-right {
-  top: 80px;
-  right: 20px;
-  border-left: none;
-  border-bottom: none;
-  box-shadow: inset 2px -2px 0 #00ff41;
-}
-
-.corner.bottom-left {
-  bottom: 20px;
-  left: 20px;
-  border-right: none;
-  border-top: none;
-  box-shadow: inset -2px 2px 0 #00ff41;
-}
-
-.corner.bottom-right {
-  bottom: 20px;
-  right: 20px;
-  border-left: none;
-  border-top: none;
-  box-shadow: inset 2px 2px 0 #00ff41;
-}
 
 /* Technical data overlay - Updated for new container */
 .controls-and-data .technical-data {
   position: relative;
+  color: #dddddd;
   top: auto;
   left: auto;
-  background: rgba(0, 20, 30, 0.85);
   padding: 15px;
-  border: 1px solid #00ff41;
   border-radius: 0;
   backdrop-filter: blur(2px);
   min-width: 200px;
@@ -160,7 +102,7 @@
 .data-line {
   display: block;
   margin-bottom: 3px;
-  font-size: 13px;
+  font-size: 16px;
   letter-spacing: 0.5px;
 }
 
@@ -177,9 +119,7 @@
 
 /* Controls Section */
 .controls-section {
-  background: rgba(0, 20, 30, 0.85);
   padding: 15px;
-  border: 1px solid #00ff41;
   border-radius: 0;
   backdrop-filter: blur(2px);
   min-width: 200px;
@@ -190,8 +130,7 @@
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
-  color: #ffffff;
-  text-shadow: 0 0 5px #00ff41;
+  color: #dddddd;
   letter-spacing: 0.5px;
 }
 
@@ -209,62 +148,18 @@
 }
 
 .control-key {
-  background: rgba(0, 255, 65, 0.2);
-  border: 1px solid #00ff41;
+  border: 1px solid #dddddd;
   padding: 2px 6px;
   border-radius: 3px;
   font-weight: bold;
   min-width: 40px;
   text-align: center;
-  color: #00ff41;
-  text-shadow: 0 0 3px #00ff41;
+  color: #dddddd;
 }
 
 .control-desc {
-  color: #00ccff;
-  text-shadow: 0 0 3px #00ccff;
-}
-
-/* REC indicator */
-.rec-indicator {
-  position: absolute;
-  top: 100px;
-  right: 20px;
-  background: rgba(0, 20, 30, 0.85);
-  padding: 10px 15px;
-  border: 1px solid #00ff41;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  backdrop-filter: blur(2px);
-}
-
-.rec-dot {
-  color: #ff0000;
-  font-size: 16px;
-  text-shadow: 0 0 8px #ff0000;
-}
-
-.rec-dot.blink {
-  opacity: 0.3;
-}
-
-.rec-text {
-  font-size: 14px;
-  color: #ff0000;
-  text-shadow: 0 0 5px #ff0000;
-}
-
-/* Species counter */
-.species-counter {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(0, 20, 30, 0.85);
-  padding: 12px 15px;
-  border: 1px solid #00ff41;
-  backdrop-filter: blur(2px);
-  min-width: 200px;
+  color: #dddddd;
+  text-shadow: 0 0 3px #dddddd;
 }
 
 .counter-line {
@@ -278,11 +173,9 @@
 .timestamp {
   position: absolute;
   bottom: 20px;
-  right: 20px;
-  background: rgba(0, 20, 30, 0.85);
+  color: #dddddd;
   padding: 10px 15px;
-  border: 1px solid #00ff41;
-  font-size: 13px;
+  font-size: 16px;
   letter-spacing: 1px;
   backdrop-filter: blur(2px);
 }
@@ -364,37 +257,7 @@
     min-width: 35px;
     padding: 1px 4px;
   }
-  
-  .corner {
-    width: 25px;
-    height: 25px;
-  }
-  
-  .corner.top-left,
-  .corner.top-right {
-    top: 60px;
-  }
-  
-  .corner.bottom-left,
-  .corner.bottom-right {
-    bottom: 10px;
-  }
-  
-  .corner.top-left,
-  .corner.bottom-left {
-    left: 10px;
-  }
-  
-  .corner.top-right,
-  .corner.bottom-right {
-    right: 10px;
-  }
-  
-  .rec-indicator {
-    top: 80px;
-    right: 10px;
-  }
-  
+ 
   .species-counter {
     bottom: 10px;
     left: 10px;
@@ -472,13 +335,5 @@
     font-size: 10px;
   }
   
-  .corner.top-left,
-  .corner.top-right {
-    top: 100px;
-  }
   
-  .rec-indicator {
-    top: 120px;
-    right: 5px;
-  }
 }

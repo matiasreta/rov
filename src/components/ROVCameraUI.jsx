@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./ROVCameraUI.css";
 
-export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3, diveTimer = 30, onBackToHome }) {
+export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome }) {
   const [timestamp, setTimestamp] = useState("");
   const [rovData, setRovData] = useState({
     heading: 0,
@@ -53,15 +53,6 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
 
   return (
     <div className="rov-camera-ui">
-      {/* Viewfinder corners */}
-      <div className="viewfinder-corners">
-        <div className="corner top-left"></div>
-        <div className="corner top-right"></div>
-        <div className="corner bottom-left"></div>
-        <div className="corner bottom-right"></div>
-      </div>
-
-      {/* Top Bar - Navigation Timer and Back Button */}
       <div className="top-bar">
         <button className="back-button" onClick={onBackToHome}>
           ← Volver al Inicio
@@ -116,24 +107,8 @@ export default function ROVCameraUI({ rovRef, speciesCount = 0, totalSpecies = 3
         </div>
       </div>
 
-      {/* REC indicator - Top Right */}
-      <div className="rec-indicator">
-        <span className="rec-dot">●</span>
-        <span className="rec-text">REC</span>
-      </div>
-
-      {/* Species counter - Bottom Left */}
-      <div className="species-counter">
-        <div className="counter-line">SPECIES CATALOG</div>
-        <div className="counter-line">
-          DISCOVERED: {speciesCount}/{totalSpecies}
-        </div>
-        <div className="counter-line">STATUS: {speciesCount === totalSpecies ? "COMPLETE" : "SCANNING"}</div>
-      </div>
-
       {/* Timestamp - Bottom Right */}
       <div className="timestamp">{timestamp}</div>
-
     </div>
   );
 }
