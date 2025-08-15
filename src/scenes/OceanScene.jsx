@@ -35,12 +35,12 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           {/* Cámara primera persona dentro del ROV */}
           <VehicleCamera target={rovRef} offset={[0, 0.2, 0.3]} />
 
-          {/* Iluminación ambiente submarina muy limitada */}
-          <ambientLight intensity={0.15} color="#002233" />
-          <directionalLight position={[10, 20, 5]} intensity={0.2} color="#004466" castShadow />
+          {/* Iluminación ambiente submarina mejorada para colores */}
+          <ambientLight intensity={0.4} color="#ffffff" />
+          <directionalLight position={[10, 20, 5]} intensity={0.6} color="#ffffff" castShadow />
 
           {/* Niebla densa para simular visibilidad oceánica limitada */}
-          <fog attach="fog" args={["#000811", 1, 23]} />
+          <fog attach="fog" args={["#021722", 1, 23]} />
 
           {/* Fondo marino personalizado */}
           <CustomOceanFloor />
@@ -53,8 +53,7 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           <MarineCreature position={[-1, -7, -4]} modelPath="/src/assets/models/seacrab.glb" creatureName="Cangrejo de Mar" onDiscovered={handleSpeciesDiscovered} />
           <MarineCreature position={[-1, -7, -1]} modelPath="/src/assets/models/seacucumber.glb" creatureName="Pepino de Mar" onDiscovered={handleSpeciesDiscovered} />
 
-          {/* Ambiente submarino */}
-          <Environment preset="dawn" />
+          {/* Ambiente submarino - removido para evitar alteración de colores */}
         </Suspense>
       </Canvas>
 
