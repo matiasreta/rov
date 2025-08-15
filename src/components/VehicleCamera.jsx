@@ -8,8 +8,8 @@ export default function VehicleCamera({ target, offset = [0, 0.2, 0.5] }) {
   const currentLookAt = useRef(new Vector3());
 
   // Configurar FOV muy restrictivo para simular visión de ROV submarina
-  camera.fov = 80; // FOV muy pequeño para crear efecto de "linterna submarina"
-  camera.far = 35; // Limitar distancia de renderizado para mayor inmersión
+  camera.fov = 96; // FOV muy pequeño para crear efecto de "linterna submarina"
+  camera.far = 60; // Limitar distancia de renderizado para mayor inmersión
   camera.updateProjectionMatrix();
 
   useFrame(() => {

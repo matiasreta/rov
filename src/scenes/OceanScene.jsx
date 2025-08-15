@@ -22,12 +22,12 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
       <Canvas
         camera={{
           position: [0, -1, 3],
-          fov: 80,
+          fov: 96,
           near: 0.5,
-          far: 35,
+          far: 60,
         }}
         gl={{
-          clearColor: new Color("#000611"),
+          clearColor: new Color("#536ea1"),
           antialias: true,
         }}
       >
@@ -40,7 +40,7 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           <directionalLight position={[10, 20, 5]} intensity={0.2} color="#004466" castShadow />
 
           {/* Niebla densa para simular visibilidad oceánica limitada */}
-          <fog attach="fog" args={["#000811", 3, 12]} />
+          <fog attach="fog" args={["#000811", 1, 23]} />
 
           {/* Fondo marino personalizado */}
           <CustomOceanFloor />
