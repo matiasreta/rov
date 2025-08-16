@@ -77,8 +77,8 @@ export default function ROVVehicle({ rovRef }) {
       const newPos = prev.clone();
       newPos.add(velocity.clone().multiplyScalar(delta * 60));
 
-      // Límites del mundo
-      newPos.y = Math.max(-10, Math.min(5, newPos.y));
+      // Límites del mundo - evitar que baje más del suelo de arena
+      newPos.y = Math.max(-6.5, Math.min(5, newPos.y));
 
       return newPos;
     });
