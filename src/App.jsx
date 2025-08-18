@@ -1,14 +1,42 @@
 import { useState, useEffect, useRef } from "react";
 import OceanScene from "./scenes/OceanScene";
 import HomeScreen from "./components/HomeScreen";
+import { getAllCreatureIds } from "./config/creatureTypes";
+import { getRandomMissions, isMissionCompleted } from "./config/missions";
 import "./App.css";
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState("home"); // 'home' o 'game'
 
-  // Load saved data from localStorage
+  // Load saved data from localStorage - ahora guarda conteos por tipo
   const [discoveredSpecies, setDiscoveredSpecies] = useState(() => {
     const saved = localStorage.getItem("rovGame_discoveredSpecies");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Inicializar conteos de criaturas por tipo
+  const initializeCreatureCounts = () => {
+    const counts = {};
+    getAllCreatureIds().forEach(id => {
+      counts[id] = 0;
+    });
+    return counts;
+  };
+
+  const [sessionCreatureCounts, setSessionCreatureCounts] = useState(initializeCreatureCounts);
+  const [totalCreatureCounts, setTotalCreatureCounts] = useState(() => {
+    const saved = localStorage.getItem("rovGame_totalCreatureCounts");
+    return saved ? JSON.parse(saved) : initializeCreatureCounts();
+  });
+
+  // Sistema de misiones
+  const [currentMissions, setCurrentMissions] = useState(() => {
+    const saved = localStorage.getItem("rovGame_currentMissions");
+    return saved ? JSON.parse(saved) : getRandomMissions(2);
+  });
+
+  const [completedMissions, setCompletedMissions] = useState(() => {
+    const saved = localStorage.getItem("rovGame_completedMissions");
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -33,6 +61,16 @@ function App() {
     setCurrentScreen("game");
     setDiveTimer(120);
     setIsGameActive(true);
+    
+    // Reiniciar conteos de sesión
+    setSessionCreatureCounts(initializeCreatureCounts());
+    
+    // Generar nuevas misiones si no hay misiones activas
+    if (currentMissions.length === 0) {
+      const newMissions = getRandomMissions(2);
+      setCurrentMissions(newMissions);
+    }
+    
     setSessionStats((prev) => ({
       ...prev,
       especiesEnSesion: 0,
@@ -73,25 +111,52 @@ function App() {
     }, 1000);
   };
 
-  const handleSpeciesDiscovery = (speciesId) => {
-    if (!discoveredSpecies.includes(speciesId)) {
-      const now = Date.now();
-      const sessionStart = sessionStats.sessionStartTime;
-      const timeSinceStart = now - sessionStart;
-      const isQuickDiscovery = timeSinceStart < 10000; // Less than 10 seconds
+  const handleSpeciesDiscovery = (creatureType) => {
+    // Incrementar conteos de sesión
+    setSessionCreatureCounts(prev => ({
+      ...prev,
+      [creatureType]: prev[creatureType] + 1
+    }));
 
-      setDiscoveredSpecies((prev) => [...prev, speciesId]);
-      setSessionStats((prev) => ({
-        ...prev,
-        especies: prev.especies + 1,
-        especiesEnSesion: prev.especiesEnSesion + 1,
-        descubrimientoRapido: prev.descubrimientoRapido || isQuickDiscovery,
-      }));
+    // Incrementar conteos totales
+    setTotalCreatureCounts(prev => ({
+      ...prev,
+      [creatureType]: prev[creatureType] + 1
+    }));
 
-      console.log(`Especie descubierta: ${speciesId}`);
-      if (isQuickDiscovery) {
-        console.log("¡Descubrimiento rápido! Menos de 10 segundos");
+    // Agregar a especies descubiertas si es primera vez
+    if (!discoveredSpecies.includes(creatureType)) {
+      setDiscoveredSpecies(prev => [...prev, creatureType]);
+    }
+
+    // Verificar misiones completadas
+    const updatedCounts = {
+      ...sessionCreatureCounts,
+      [creatureType]: sessionCreatureCounts[creatureType] + 1
+    };
+
+    currentMissions.forEach(mission => {
+      if (!completedMissions.includes(mission.id) && isMissionCompleted(mission, updatedCounts)) {
+        setCompletedMissions(prev => [...prev, mission.id]);
+        console.log(`¡Misión completada: ${mission.title}!`);
       }
+    });
+
+    const now = Date.now();
+    const sessionStart = sessionStats.sessionStartTime;
+    const timeSinceStart = now - sessionStart;
+    const isQuickDiscovery = timeSinceStart < 10000;
+
+    setSessionStats(prev => ({
+      ...prev,
+      especies: prev.especies + 1,
+      especiesEnSesion: prev.especiesEnSesion + 1,
+      descubrimientoRapido: prev.descubrimientoRapido || isQuickDiscovery,
+    }));
+
+    console.log(`Criatura descubierta: ${creatureType}`);
+    if (isQuickDiscovery) {
+      console.log("¡Descubrimiento rápido! Menos de 10 segundos");
     }
   };
 
@@ -99,6 +164,18 @@ function App() {
   useEffect(() => {
     localStorage.setItem("rovGame_discoveredSpecies", JSON.stringify(discoveredSpecies));
   }, [discoveredSpecies]);
+
+  useEffect(() => {
+    localStorage.setItem("rovGame_totalCreatureCounts", JSON.stringify(totalCreatureCounts));
+  }, [totalCreatureCounts]);
+
+  useEffect(() => {
+    localStorage.setItem("rovGame_currentMissions", JSON.stringify(currentMissions));
+  }, [currentMissions]);
+
+  useEffect(() => {
+    localStorage.setItem("rovGame_completedMissions", JSON.stringify(completedMissions));
+  }, [completedMissions]);
 
   useEffect(() => {
     localStorage.setItem("rovGame_sessionStats", JSON.stringify(sessionStats));
@@ -116,9 +193,23 @@ function App() {
   return (
     <div className="app">
       {currentScreen === "home" ? (
-        <HomeScreen onStartGame={handleStartGame} playerStats={sessionStats} discoveredSpecies={discoveredSpecies} />
+        <HomeScreen 
+          onStartGame={handleStartGame} 
+          playerStats={sessionStats} 
+          discoveredSpecies={discoveredSpecies}
+          totalCreatureCounts={totalCreatureCounts}
+          completedMissions={completedMissions}
+        />
       ) : (
-        <OceanScene onSpeciesDiscovery={handleSpeciesDiscovery} isGameActive={isGameActive} diveTimer={diveTimer} onBackToHome={handleBackToHome} discoveredSpecies={discoveredSpecies} />
+        <OceanScene 
+          onSpeciesDiscovery={handleSpeciesDiscovery} 
+          isGameActive={isGameActive} 
+          diveTimer={diveTimer} 
+          onBackToHome={handleBackToHome} 
+          discoveredSpecies={discoveredSpecies}
+          sessionCreatureCounts={sessionCreatureCounts}
+          currentMissions={currentMissions}
+        />
       )}
     </div>
   );

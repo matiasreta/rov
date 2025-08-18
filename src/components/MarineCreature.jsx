@@ -1,27 +1,38 @@
 import { useRef, useState } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { getCreatureById } from "../config/creatureTypes";
 
-export default function MarineCreature({ position, modelPath, creatureName, scale = 1, onDiscovered }) {
+export default function MarineCreature({ position, creatureType, onDiscovered }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  const gltf = useLoader(GLTFLoader, modelPath);
-
+  // Obtener información de la criatura desde la configuración
+  const creatureInfo = getCreatureById(creatureType);
+  
+  // Cargar el modelo (debe hacerse antes de cualquier return condicional)
+  const gltf = useLoader(GLTFLoader, creatureInfo?.modelPath || '/src/assets/models/Snail.glb');
+  
+  // useFrame debe ejecutarse siempre, antes de cualquier return condicional
   useFrame((state) => {
-    if (groupRef.current) {
+    if (groupRef.current && creatureInfo) {
       groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.2;
     }
   });
+  
+  if (!creatureInfo) {
+    console.error(`Creature type "${creatureType}" not found in configuration`);
+    return null;
+  }
 
   const handleClick = () => {
-    console.log(`¡Criatura descubierta! ${creatureName}`);
+    console.log(`¡Criatura descubierta! ${creatureInfo.name} (${creatureType})`);
     setClicked(true);
     setTimeout(() => setClicked(false), 200);
 
     if (onDiscovered) {
-      onDiscovered(creatureName);
+      onDiscovered(creatureType);
     }
   };
 
@@ -38,7 +49,7 @@ export default function MarineCreature({ position, modelPath, creatureName, scal
   return (
     <group ref={groupRef} position={position} scale={clicked ? 0.9 : 1}>
       {/* Modelo 3D real */}
-      <primitive object={gltf.scene.clone()} scale={hovered ? scale * 1.1 : scale} />
+      <primitive object={gltf.scene.clone()} scale={hovered ? creatureInfo.scale * 1.1 : creatureInfo.scale} />
 
       {/* Hitbox invisible */}
       <mesh onClick={handleClick} onPointerOver={handlePointerOver} onPointerOut={handlePointerOut}>

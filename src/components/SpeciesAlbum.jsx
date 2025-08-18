@@ -1,11 +1,12 @@
+import { getAllCreatureTypes } from '../config/creatureTypes';
+
 export default function SpeciesAlbum({ isOpen, onClose, discoveredSpecies = [] }) {
   if (!isOpen) return null;
 
-  const allSpecies = [
-    { name: 'Caracol Marino', discovered: discoveredSpecies.includes('Caracol Marino') },
-    { name: 'Cangrejo de Mar', discovered: discoveredSpecies.includes('Cangrejo de Mar') },
-    { name: 'Pepino de Mar', discovered: discoveredSpecies.includes('Pepino de Mar') }
-  ];
+  const allSpecies = getAllCreatureTypes().map(creature => ({
+    ...creature,
+    discovered: discoveredSpecies.includes(creature.id)
+  }));
 
   return (
     <div style={{
@@ -45,9 +46,18 @@ export default function SpeciesAlbum({ isOpen, onClose, discoveredSpecies = [] }
               }}
             >
               <span style={{ marginRight: '1rem', fontSize: '2rem' }}>
-                {species.discovered ? '🐚' : '❓'}
+                {species.discovered ? species.emoji : '❓'}
               </span>
-              <span>{species.discovered ? species.name : '???'}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 'bold' }}>
+                  {species.discovered ? species.name : '???'}
+                </div>
+                {species.discovered && (
+                  <div style={{ fontSize: '0.8rem', color: '#aaa', marginTop: '4px' }}>
+                    {species.description}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>

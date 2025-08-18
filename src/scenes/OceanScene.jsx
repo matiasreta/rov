@@ -9,12 +9,12 @@ import VehicleCamera from "../components/VehicleCamera";
 import MarineCreature from "../components/MarineCreature";
 import ROVCameraUI from "../components/ROVCameraUI";
 
-export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, discoveredSpecies = [] }) {
+export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, discoveredSpecies = [], sessionCreatureCounts = {}, currentMissions = [] }) {
   const rovRef = useRef();
 
-  const handleSpeciesDiscovered = (speciesName) => {
+  const handleSpeciesDiscovered = (creatureType) => {
     if (isGameActive && onSpeciesDiscovery) {
-      onSpeciesDiscovery(speciesName);
+      onSpeciesDiscovery(creatureType);
     }
   };
 
@@ -52,17 +52,47 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           {/* ROV con controles de vehículo */}
           <ROVVehicle rovRef={rovRef} />
 
-          {/* Criaturas marinas */}
-          <MarineCreature position={[-1, -6, -7]} modelPath="/src/assets/models/Snail.glb" creatureName="Caracol Marino" scale={0.05} onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-1, -6, -4]} modelPath="/src/assets/models/seacrab.glb" creatureName="Cangrejo de Mar" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-1, -6, -1]} modelPath="/src/assets/models/seacucumber.glb" creatureName="Pepino de Mar" onDiscovered={handleSpeciesDiscovered} />
+          {/* Criaturas marinas - 16 criaturas distribuidas por el mapa */}
+          {/* Zona Central */}
+          <MarineCreature position={[-1, -6, -7]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -6, -4]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -6, -1]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
+          
+          {/* Zona Norte */}
+          <MarineCreature position={[3, -5, -8]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[5, -7, -6]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[2, -6, -10]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
+          
+          {/* Zona Sur */}
+          <MarineCreature position={[-5, -6, -3]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-4, -7, -9]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-6, -5, -5]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
+          
+          {/* Zona Este */}
+          <MarineCreature position={[7, -6, -2]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[8, -5, -7]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[6, -8, -4]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
+          
+          {/* Zona Oeste */}
+          <MarineCreature position={[-8, -6, -6]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-7, -7, -2]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-9, -5, -8]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
+          
+          {/* Zona Profunda */}
+          <MarineCreature position={[0, -9, -12]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
 
           {/* Ambiente submarino - removido para evitar alteración de colores */}
         </Suspense>
       </Canvas>
 
       {/* ROV Camera UI Overlay - Unificado */}
-      <ROVCameraUI rovRef={rovRef} speciesCount={discoveredSpecies.length} totalSpecies={3} diveTimer={diveTimer} onBackToHome={onBackToHome} />
+      <ROVCameraUI 
+        rovRef={rovRef} 
+        diveTimer={diveTimer} 
+        onBackToHome={onBackToHome}
+        sessionCreatureCounts={sessionCreatureCounts}
+        currentMissions={currentMissions}
+      />
     </div>
   );
 }

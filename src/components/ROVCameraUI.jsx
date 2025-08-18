@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { getCreatureById } from "../config/creatureTypes";
+import { getMissionProgress } from "../config/missions";
 import "./ROVCameraUI.css";
 
-export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome }) {
+export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome, sessionCreatureCounts = {}, currentMissions = [] }) {
   const [timestamp, setTimestamp] = useState("");
   const [rovData, setRovData] = useState({
     heading: 0,
@@ -105,6 +107,50 @@ export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome }) {
           <div className="data-line">O2 CON: {rovData.o2Con} μM</div>
           <div className="data-line">O2 SAT: {rovData.o2Sat} %</div>
         </div>
+      </div>
+
+      {/* Mission Progress - Top Right */}
+      <div className="mission-panel">
+        <div className="mission-title">🎯 MISIONES ACTIVAS</div>
+        {currentMissions.length === 0 ? (
+          <div className="mission-item">No hay misiones activas</div>
+        ) : (
+          currentMissions.map((mission, index) => {
+            const progress = getMissionProgress(mission, sessionCreatureCounts);
+            const maxProgress = mission.target.count || mission.target.totalCount || mission.target.varietyCount;
+            const isCompleted = progress >= maxProgress;
+            
+            return (
+              <div key={index} className={`mission-item ${isCompleted ? 'completed' : ''}`}>
+                <div className="mission-name">{mission.title}</div>
+                <div className="mission-progress">
+                  {progress}/{maxProgress}
+                  {isCompleted && <span className="mission-check"> ✓</span>}
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Creature Count - Bottom Left */}
+      <div className="creature-panel">
+        <div className="creature-title">🐚 CRIATURAS ENCONTRADAS</div>
+        {Object.entries(sessionCreatureCounts).map(([creatureType, count]) => {
+          const creatureInfo = getCreatureById(creatureType);
+          if (!creatureInfo || count === 0) return null;
+          
+          return (
+            <div key={creatureType} className="creature-item">
+              <span className="creature-emoji">{creatureInfo.emoji}</span>
+              <span className="creature-name">{creatureInfo.name}</span>
+              <span className="creature-count">×{count}</span>
+            </div>
+          );
+        })}
+        {Object.values(sessionCreatureCounts).every(count => count === 0) && (
+          <div className="creature-item">Ninguna criatura encontrada</div>
+        )}
       </div>
 
       {/* Timestamp - Bottom Right */}
