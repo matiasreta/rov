@@ -21,15 +21,14 @@ export default function Album({ discoveredSpecies = [], onClose }) {
     <div className="album-overlay" onClick={onClose}>
       <div className="album-container" onClick={(e) => e.stopPropagation()}>
         <div className="album-header">
-          <h2>🐚 Álbum de Especies Marinas</h2>
+          <h2>Álbum de Especies Marinas</h2>
           <p>Descubiertas: {discoveredSpecies.length} / {allCreatures.length}</p>
-          <button className="close-album-btn" onClick={onClose}>✕</button>
+          <button className="close-album-btn" onClick={onClose}>X</button>
         </div>
 
         <div className="album-grid">
           {discoveredSpecies.length === 0 ? (
             <div className="no-species-message">
-              <div className="no-species-icon">🌊</div>
               <p>Aún no has descubierto ninguna especie.</p>
               <p>¡Sumérgete en el océano para comenzar tu colección!</p>
             </div>
@@ -43,13 +42,15 @@ export default function Album({ discoveredSpecies = [], onClose }) {
                   onClick={() => handleCardClick(creature.id)}
                 >
                   <div className="discovered-card">
+                    <div className="album-card-header">
+                      <div className="preview-name">{creature.name}</div>
+                    </div>
                     <div className="card-preview">
                       <img 
                         src={`/src/assets/img/${creature.id}.png`} 
                         alt={creature.name}
                         className="preview-img"
                       />
-                      <div className="preview-name">{creature.name}</div>
                     </div>
                     <div className="card-hover-text">Haz clic para ver</div>
                   </div>
@@ -59,7 +60,7 @@ export default function Album({ discoveredSpecies = [], onClose }) {
         </div>
 
         <div className="album-footer">
-          <p>🔍 Explora el océano para descubrir más especies</p>
+          <p>Explora el océano para descubrir más especies</p>
           <div className="progress-bar">
             <div 
               className="progress-fill" 

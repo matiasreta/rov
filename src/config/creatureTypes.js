@@ -4,19 +4,19 @@
 export const CREATURE_TYPES = {
   seacrab: {
     id: 'seacrab',
-    name: 'Cangrejo de Mar',
+    name: 'Cangrejo',
     modelPath: '/src/assets/models/seacrab.glb',
     scale: 1,
     emoji: '🦀',
-    description: 'Crustáceo común en fondos marinos'
+    description: 'Crustáceo carroñero y depredador de aguas profundas'
   },
   snail: {
     id: 'snail',
-    name: 'Caracol Marino',
+    name: 'Caracol de Mar ',
     modelPath: '/src/assets/models/Snail.glb',
     scale: 0.05,
-    emoji: '🐚',
-    description: 'Molusco gasterópodo de aguas profundas'
+    emoji: '🐌',
+    description: 'Molusco gasterópodo depredador de aguas profundas'
   },
   seacucumber: {
     id: 'seacucumber',

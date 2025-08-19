@@ -206,7 +206,6 @@ function App() {
           isGameActive={isGameActive} 
           diveTimer={diveTimer} 
           onBackToHome={handleBackToHome} 
-          discoveredSpecies={discoveredSpecies}
           sessionCreatureCounts={sessionCreatureCounts}
           currentMissions={currentMissions}
         />

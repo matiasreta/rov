@@ -10,7 +10,7 @@ import MarineCreature from "../components/MarineCreature";
 import ROVCameraUI from "../components/ROVCameraUI";
 import SpeciesCard from "../components/SpeciesCard";
 
-export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, discoveredSpecies = [], sessionCreatureCounts = {}, currentMissions = [] }) {
+export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, sessionCreatureCounts = {}, currentMissions = [] }) {
   const rovRef = useRef();
   const [showSpeciesCard, setShowSpeciesCard] = useState(null);
 
@@ -100,7 +100,6 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
         onBackToHome={onBackToHome}
         sessionCreatureCounts={sessionCreatureCounts}
         currentMissions={currentMissions}
-        discoveredSpecies={discoveredSpecies}
       />
 
       {/* Species Card Modal */}

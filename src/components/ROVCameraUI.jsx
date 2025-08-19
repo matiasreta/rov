@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { getCreatureById } from "../config/creatureTypes";
 import { getMissionProgress } from "../config/missions";
-import Album from "./Album";
 import "./ROVCameraUI.css";
 
-export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome, sessionCreatureCounts = {}, currentMissions = [], discoveredSpecies = [] }) {
+export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome, sessionCreatureCounts = {}, currentMissions = [] }) {
   const [timestamp, setTimestamp] = useState("");
-  const [showAlbum, setShowAlbum] = useState(false);
   const [rovData, setRovData] = useState({
     heading: 0,
     depth: 0,
@@ -65,9 +63,6 @@ export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome, sess
           <span className="timer-label">TIEMPO:</span>
           <span className={`timer-value ${diveTimer <= 10 ? "timer-warning" : ""}`}>{diveTimer}s</span>
         </div>
-        <button className="album-button" onClick={() => setShowAlbum(true)}>
-          🐚 Álbum ({discoveredSpecies.length})
-        </button>
       </div>
 
       {/* Controls and Technical data overlay - Top Left */}
@@ -161,13 +156,6 @@ export default function ROVCameraUI({ rovRef, diveTimer = 30, onBackToHome, sess
       {/* Timestamp - Bottom Right */}
       <div className="timestamp">{timestamp}</div>
 
-      {/* Album Modal */}
-      {showAlbum && (
-        <Album 
-          discoveredSpecies={discoveredSpecies} 
-          onClose={() => setShowAlbum(false)}
-        />
-      )}
     </div>
   );
 }
