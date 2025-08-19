@@ -40,6 +40,28 @@
   text-shadow: none;
 }
 
+.album-button {
+  background: rgba(0, 0, 0, 0.7);
+  color: #dddddd;
+  border: 2px solid #00aaff;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-family: inherit;
+  text-shadow: none;
+}
+
+.album-button:hover {
+  background: rgba(0, 170, 255, 0.2);
+  border-color: #0099dd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 170, 255, 0.3);
+}
+
 .timer-display {
   background: rgba(0, 0, 0, 0.8);
   border: 2px solid #ffd900;

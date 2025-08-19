@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useState } from "react";
 import { Color } from "three";
 import CustomOceanFloor from "../components/CustomOceanFloor";
 import SandFloor from "../components/SandFloor";
@@ -8,14 +8,22 @@ import ROVVehicle from "../components/ROVVehicle";
 import VehicleCamera from "../components/VehicleCamera";
 import MarineCreature from "../components/MarineCreature";
 import ROVCameraUI from "../components/ROVCameraUI";
+import SpeciesCard from "../components/SpeciesCard";
 
 export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, discoveredSpecies = [], sessionCreatureCounts = {}, currentMissions = [] }) {
   const rovRef = useRef();
+  const [showSpeciesCard, setShowSpeciesCard] = useState(null);
 
   const handleSpeciesDiscovered = (creatureType) => {
     if (isGameActive && onSpeciesDiscovery) {
       onSpeciesDiscovery(creatureType);
+      // Show the species card
+      setShowSpeciesCard(creatureType);
     }
+  };
+
+  const handleCloseCard = () => {
+    setShowSpeciesCard(null);
   };
 
   return (
@@ -92,7 +100,16 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
         onBackToHome={onBackToHome}
         sessionCreatureCounts={sessionCreatureCounts}
         currentMissions={currentMissions}
+        discoveredSpecies={discoveredSpecies}
       />
+
+      {/* Species Card Modal */}
+      {showSpeciesCard && (
+        <SpeciesCard 
+          creatureType={showSpeciesCard} 
+          onClose={handleCloseCard}
+        />
+      )}
     </div>
   );
 }
