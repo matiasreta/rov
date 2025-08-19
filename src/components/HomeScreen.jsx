@@ -1,11 +1,11 @@
 import { useState } from "react";
-import AchievementsModal from "./AchievementsModal.jsx";
-import SpeciesAlbum from "./SpeciesAlbum.jsx";
+import Achievements from "./Achievements.jsx";
+import Album from "./Album.jsx";
 import "./HomeScreen.css";
 
-export default function HomeScreen({ onStartGame, playerStats, discoveredSpecies }) {
+export default function HomeScreen({ onStartGame, playerStats, discoveredSpecies, unlockedAchievements }) {
   const [showAchievements, setShowAchievements] = useState(false);
-  const [showSpeciesAlbum, setShowSpeciesAlbum] = useState(false);
+  const [showAlbum, setShowAlbum] = useState(false);
   return (
     <div className="home-screen">
       <div className="home-background">
@@ -23,23 +23,33 @@ export default function HomeScreen({ onStartGame, playerStats, discoveredSpecies
             </button>
 
             <div className="menu-buttons">
-              <button className="menu-button" onClick={() => setShowSpeciesAlbum(true)}>
+              <button className="menu-button" onClick={() => setShowAlbum(true)}>
                 <span className="button-icon">📚</span>
                 <span className="button-label">ÁLBUM DE ESPECIES</span>
               </button>
 
               <button className="menu-button" onClick={() => setShowAchievements(true)}>
                 <span className="button-icon">🏆</span>
-                <span className="button-label">LOGROS</span>
+                <span className="button-label">LOGROS ({unlockedAchievements?.length || 0})</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <AchievementsModal isOpen={showAchievements} onClose={() => setShowAchievements(false)} playerStats={playerStats} />
+      {showAchievements && (
+        <Achievements 
+          unlockedAchievements={unlockedAchievements}
+          onClose={() => setShowAchievements(false)}
+        />
+      )}
 
-      <SpeciesAlbum isOpen={showSpeciesAlbum} onClose={() => setShowSpeciesAlbum(false)} discoveredSpecies={discoveredSpecies} />
+      {showAlbum && (
+        <Album 
+          discoveredSpecies={discoveredSpecies} 
+          onClose={() => setShowAlbum(false)}
+        />
+      )}
     </div>
   );
 }

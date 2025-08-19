@@ -3,6 +3,7 @@ import OceanScene from "./scenes/OceanScene";
 import HomeScreen from "./components/HomeScreen";
 import { getAllCreatureIds } from "./config/creatureTypes";
 import { getRandomMissions, isMissionCompleted } from "./config/missions";
+import { getUnlockedAchievements } from "./config/achievements";
 import "./App.css";
 
 function App() {
@@ -37,6 +38,12 @@ function App() {
 
   const [completedMissions, setCompletedMissions] = useState(() => {
     const saved = localStorage.getItem("rovGame_completedMissions");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Sistema de logros
+  const [unlockedAchievements, setUnlockedAchievements] = useState(() => {
+    const saved = localStorage.getItem("rovGame_unlockedAchievements");
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -154,6 +161,34 @@ function App() {
       descubrimientoRapido: prev.descubrimientoRapido || isQuickDiscovery,
     }));
 
+    // Verificar logros nuevos
+    const gameStats = {
+      totalCreatureCounts: {
+        ...totalCreatureCounts,
+        [creatureType]: totalCreatureCounts[creatureType] + 1
+      },
+      discoveredSpecies: !discoveredSpecies.includes(creatureType) 
+        ? [...discoveredSpecies, creatureType] 
+        : discoveredSpecies,
+      sessionStats: {
+        ...sessionStats,
+        especies: sessionStats.especies + 1,
+        especiesEnSesion: sessionStats.especiesEnSesion + 1,
+        descubrimientoRapido: sessionStats.descubrimientoRapido || isQuickDiscovery
+      }
+    };
+
+    const newUnlockedAchievements = getUnlockedAchievements(gameStats);
+    const newAchievementIds = newUnlockedAchievements.map(a => a.id);
+    const previouslyUnlocked = unlockedAchievements;
+    
+    // Detectar logros nuevos
+    const newlyUnlocked = newAchievementIds.filter(id => !previouslyUnlocked.includes(id));
+    if (newlyUnlocked.length > 0) {
+      setUnlockedAchievements(newAchievementIds);
+      console.log(`¡Nuevos logros desbloqueados!`, newlyUnlocked);
+    }
+
     console.log(`Criatura descubierta: ${creatureType}`);
     if (isQuickDiscovery) {
       console.log("¡Descubrimiento rápido! Menos de 10 segundos");
@@ -178,6 +213,10 @@ function App() {
   }, [completedMissions]);
 
   useEffect(() => {
+    localStorage.setItem("rovGame_unlockedAchievements", JSON.stringify(unlockedAchievements));
+  }, [unlockedAchievements]);
+
+  useEffect(() => {
     localStorage.setItem("rovGame_sessionStats", JSON.stringify(sessionStats));
   }, [sessionStats]);
 
@@ -199,6 +238,7 @@ function App() {
           discoveredSpecies={discoveredSpecies}
           totalCreatureCounts={totalCreatureCounts}
           completedMissions={completedMissions}
+          unlockedAchievements={unlockedAchievements}
         />
       ) : (
         <OceanScene 
