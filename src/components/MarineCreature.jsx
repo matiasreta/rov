@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { getCreatureById } from "../config/creatureTypes";
 
-export default function MarineCreature({ position, creatureType, onDiscovered }) {
+export default function MarineCreature({ position, creatureType, creatureId, onDiscovered }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -32,7 +32,7 @@ export default function MarineCreature({ position, creatureType, onDiscovered })
     setTimeout(() => setClicked(false), 200);
 
     if (onDiscovered) {
-      onDiscovered(creatureType);
+      onDiscovered(creatureType, creatureId);
     }
   };
 

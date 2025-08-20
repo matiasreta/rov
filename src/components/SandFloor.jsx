@@ -6,7 +6,7 @@ export default function SandFloor({ size = [400, 400], position = [0, -7, 0] }) 
 
   sandTexture.wrapS = RepeatWrapping;
   sandTexture.wrapT = RepeatWrapping;
-  sandTexture.repeat.set(20, 20);
+  sandTexture.repeat.set(24, 24);
 
   return (
     <mesh position={position} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>

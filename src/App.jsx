@@ -248,6 +248,7 @@ function App() {
           onBackToHome={handleBackToHome} 
           sessionCreatureCounts={sessionCreatureCounts}
           currentMissions={currentMissions}
+          discoveredSpecies={discoveredSpecies}
         />
       )}
     </div>

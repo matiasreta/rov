@@ -10,15 +10,26 @@ import MarineCreature from "../components/MarineCreature";
 import ROVCameraUI from "../components/ROVCameraUI";
 import SpeciesCard from "../components/SpeciesCard";
 
-export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, sessionCreatureCounts = {}, currentMissions = [] }) {
+export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer, onBackToHome, sessionCreatureCounts = {}, currentMissions = [], discoveredSpecies = [] }) {
   const rovRef = useRef();
   const [showSpeciesCard, setShowSpeciesCard] = useState(null);
+  const [clickedCreatures, setClickedCreatures] = useState(new Set());
 
-  const handleSpeciesDiscovered = (creatureType) => {
+  const handleSpeciesDiscovered = (creatureType, creatureId) => {
+    // Check if this specific creature has already been clicked
+    if (clickedCreatures.has(creatureId)) {
+      return; // Don't count clicks on already discovered creatures
+    }
+
     if (isGameActive && onSpeciesDiscovery) {
+      // Mark this creature as clicked
+      setClickedCreatures(prev => new Set([...prev, creatureId]));
+      
       onSpeciesDiscovery(creatureType);
-      // Show the species card
-      setShowSpeciesCard(creatureType);
+      // Show the species card only if it's the first time discovering this creature type
+      if (!discoveredSpecies.includes(creatureType)) {
+        setShowSpeciesCard(creatureType);
+      }
     }
   };
 
@@ -45,11 +56,12 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           <VehicleCamera target={rovRef} offset={[0, 0.2, 0.3]} />
 
           {/* Iluminación ambiente submarina mejorada para colores */}
-          <ambientLight intensity={0.4} color="#ffffff" />
-          <directionalLight position={[10, 20, 5]} intensity={0.6} color="#ffffff" castShadow />
+          <ambientLight intensity={5.3} color="#3475d8" />
+          <hemisphereLight skyColor="#4f94cd" groundColor="#1e3a5f" intensity={0.5} />
+          <directionalLight position={[10, 20, 5]} intensity={0.5} color="#ffffff" castShadow />
 
           {/* Niebla densa para simular visibilidad oceánica limitada */}
-          <fog attach="fog" args={["#021722", 1, 23]} />
+          <fog attach="fog" args={["#011e2b", 1, 23]} />
 
           {/* Suelo de arena */}
           <SandFloor />
@@ -62,53 +74,42 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
 
           {/* Criaturas marinas - 16 criaturas distribuidas por el mapa */}
           {/* Zona Central */}
-          <MarineCreature position={[-1, -6, -7]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-1, -6, -4]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-1, -6, -1]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
-          
+          <MarineCreature position={[-1, -6, -7]} creatureType="snail" creatureId="snail-1" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -6, -4]} creatureType="seacrab" creatureId="seacrab-1" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-1, -6, -1]} creatureType="seacucumber" creatureId="seacucumber-1" onDiscovered={handleSpeciesDiscovered} />
+
           {/* Zona Norte */}
-          <MarineCreature position={[3, -5, -8]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[5, -7, -6]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[2, -6, -10]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
-          
+          <MarineCreature position={[3, -5, -8]} creatureType="seacrab" creatureId="seacrab-2" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[5, -7, -6]} creatureType="snail" creatureId="snail-2" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[2, -6, -10]} creatureType="seacucumber" creatureId="seacucumber-2" onDiscovered={handleSpeciesDiscovered} />
+
           {/* Zona Sur */}
-          <MarineCreature position={[-5, -6, -3]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-4, -7, -9]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-6, -5, -5]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
-          
+          <MarineCreature position={[-5, -6, -3]} creatureType="seacrab" creatureId="seacrab-3" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-4, -7, -9]} creatureType="snail" creatureId="snail-3" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-6, -5, -5]} creatureType="seacucumber" creatureId="seacucumber-3" onDiscovered={handleSpeciesDiscovered} />
+
           {/* Zona Este */}
-          <MarineCreature position={[7, -6, -2]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[8, -5, -7]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[6, -8, -4]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
-          
+          <MarineCreature position={[7, -6, -2]} creatureType="seacrab" creatureId="seacrab-4" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[8, -5, -7]} creatureType="snail" creatureId="snail-4" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[6, -8, -4]} creatureType="seacucumber" creatureId="seacucumber-4" onDiscovered={handleSpeciesDiscovered} />
+
           {/* Zona Oeste */}
-          <MarineCreature position={[-8, -6, -6]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-7, -7, -2]} creatureType="snail" onDiscovered={handleSpeciesDiscovered} />
-          <MarineCreature position={[-9, -5, -8]} creatureType="seacucumber" onDiscovered={handleSpeciesDiscovered} />
-          
+          <MarineCreature position={[-8, -6, -6]} creatureType="seacrab" creatureId="seacrab-5" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-7, -7, -2]} creatureType="snail" creatureId="snail-5" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[-9, -5, -8]} creatureType="seacucumber" creatureId="seacucumber-5" onDiscovered={handleSpeciesDiscovered} />
+
           {/* Zona Profunda */}
-          <MarineCreature position={[0, -9, -12]} creatureType="seacrab" onDiscovered={handleSpeciesDiscovered} />
+          <MarineCreature position={[0, -9, -12]} creatureType="seacrab" creatureId="seacrab-6" onDiscovered={handleSpeciesDiscovered} />
 
           {/* Ambiente submarino - removido para evitar alteración de colores */}
         </Suspense>
       </Canvas>
 
       {/* ROV Camera UI Overlay - Unificado */}
-      <ROVCameraUI 
-        rovRef={rovRef} 
-        diveTimer={diveTimer} 
-        onBackToHome={onBackToHome}
-        sessionCreatureCounts={sessionCreatureCounts}
-        currentMissions={currentMissions}
-      />
+      <ROVCameraUI rovRef={rovRef} diveTimer={diveTimer} onBackToHome={onBackToHome} sessionCreatureCounts={sessionCreatureCounts} currentMissions={currentMissions} />
 
       {/* Species Card Modal */}
-      {showSpeciesCard && (
-        <SpeciesCard 
-          creatureType={showSpeciesCard} 
-          onClose={handleCloseCard}
-        />
-      )}
+      {showSpeciesCard && <SpeciesCard creatureType={showSpeciesCard} onClose={handleCloseCard} />}
     </div>
   );
 }
