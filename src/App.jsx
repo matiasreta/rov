@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import OceanScene from "./scenes/OceanScene";
 import HomeScreen from "./components/HomeScreen";
 import { getAllCreatureIds } from "./config/creatureTypes";
-import { getRandomMissions, isMissionCompleted } from "./config/missions";
+import { getProgressiveMissions, isMissionCompleted } from "./config/missions";
 import { getUnlockedAchievements } from "./config/achievements";
 import "./App.css";
 
@@ -33,7 +33,9 @@ function App() {
   // Sistema de misiones
   const [currentMissions, setCurrentMissions] = useState(() => {
     const saved = localStorage.getItem("rovGame_currentMissions");
-    return saved ? JSON.parse(saved) : getRandomMissions(2);
+    const completedMissions = localStorage.getItem("rovGame_completedMissions");
+    const completedIds = completedMissions ? JSON.parse(completedMissions) : [];
+    return saved ? JSON.parse(saved) : getProgressiveMissions(completedIds, 2);
   });
 
   const [completedMissions, setCompletedMissions] = useState(() => {
@@ -60,13 +62,13 @@ function App() {
           sessionStartTime: null,
         };
   });
-  const [diveTimer, setDiveTimer] = useState(420);
+  const [diveTimer, setDiveTimer] = useState(100);
   const [isGameActive, setIsGameActive] = useState(false);
   const timerRef = useRef(null);
 
   const handleStartGame = () => {
     setCurrentScreen("game");
-    setDiveTimer(420);
+    setDiveTimer(100);
     setIsGameActive(true);
 
     // Reiniciar conteos de sesión
@@ -74,7 +76,7 @@ function App() {
 
     // Generar nuevas misiones si no hay misiones activas
     if (currentMissions.length === 0) {
-      const newMissions = getRandomMissions(2);
+      const newMissions = getProgressiveMissions(completedMissions, 2);
       setCurrentMissions(newMissions);
     }
 
@@ -142,12 +144,23 @@ function App() {
       [creatureType]: sessionCreatureCounts[creatureType] + 1,
     };
 
+    let newlyCompletedMissions = [];
     currentMissions.forEach((mission) => {
       if (!completedMissions.includes(mission.id) && isMissionCompleted(mission, updatedCounts)) {
-        setCompletedMissions((prev) => [...prev, mission.id]);
+        newlyCompletedMissions.push(mission.id);
         console.log(`¡Misión completada: ${mission.title}!`);
       }
     });
+
+    // Si se completaron misiones, actualizar y avanzar a la siguiente
+    if (newlyCompletedMissions.length > 0) {
+      const updatedCompletedMissions = [...completedMissions, ...newlyCompletedMissions];
+      setCompletedMissions(updatedCompletedMissions);
+
+      // Generar nuevas misiones progresivas
+      const newMissions = getProgressiveMissions(updatedCompletedMissions, 2);
+      setCurrentMissions(newMissions);
+    }
 
     const now = Date.now();
     const sessionStart = sessionStats.sessionStartTime;

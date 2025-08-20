@@ -61,7 +61,7 @@ export default function OceanScene({ onSpeciesDiscovery, isGameActive, diveTimer
           <directionalLight position={[10, 20, 5]} intensity={0.5} color="#ffffff" castShadow />
 
           {/* Niebla densa para simular visibilidad oceánica limitada */}
-          {/* <fog attach="fog" args={["#011e2b", 1, 23]} /> */}
+          <fog attach="fog" args={["#011e2b", 1, 23]} />
 
           {/* Suelo de arena */}
           <SandFloor />
