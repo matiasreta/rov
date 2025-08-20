@@ -13,7 +13,7 @@
 }
 
 .achievements-container {
-  background: rgba(28, 103, 122, 0.8);
+  background: hsla(199, 95%, 9%, 0.75);
   width: 100vw;
   height: 100vh;
   overflow-y: auto;

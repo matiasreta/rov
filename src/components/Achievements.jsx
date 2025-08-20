@@ -1,4 +1,4 @@
-import { getAllAchievements, ACHIEVEMENT_CATEGORIES, getUnlockedAchievements } from "../config/achievements";
+import { getAllAchievements, ACHIEVEMENT_CATEGORIES} from "../config/achievements";
 import "./Achievements.css";
 
 export default function Achievements({ unlockedAchievements = [], onClose }) {

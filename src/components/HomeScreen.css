@@ -23,7 +23,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(28, 103, 122, 0.486);
+  background: hsla(199, 95%, 9%, 0.75);
 }
 
 .content-container {
@@ -51,7 +51,7 @@
   font-size: 5rem;
   font-weight: 900;
   margin: 0;
-  color: #ffe600;
+  color: #ffd900;
   text-transform: uppercase;
   font-family: 'Arial Black', sans-serif;
 }
@@ -84,7 +84,7 @@
 }
 
 .explore-button {
-  background: #ffed4e;
+  background: #ffd900;
   border: none;
   border-radius: 0px;
   padding: 1.5rem 4rem;
@@ -103,7 +103,7 @@
 }
 
 .explore-button:hover {
-  background: #ffed4e;
+  background: #ffd900;
   border-radius: 0px;
 }
 

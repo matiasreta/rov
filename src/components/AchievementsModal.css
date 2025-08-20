@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: hsla(199, 95%, 9%, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
 }
 
 .achievements-modal {
-  background: linear-gradient(135deg, #1a3b5c, #2d5a8a);
+  background: hsla(199, 95%, 9%, 0.75);
   border: 2px solid #ffd900;
   border-radius: 12px;
   width: 90%;
