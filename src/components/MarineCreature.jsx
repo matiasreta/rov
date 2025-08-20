@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { getCreatureById } from "../config/creatureTypes";
 
-export default function MarineCreature({ position, creatureType, creatureId, onDiscovered }) {
+export default function MarineCreature({ position, creatureType, creatureId, onDiscovered, rotationX = 0 }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -47,7 +47,7 @@ export default function MarineCreature({ position, creatureType, creatureId, onD
   };
 
   return (
-    <group ref={groupRef} position={position} scale={clicked ? 0.9 : 1}>
+    <group ref={groupRef} position={position} scale={clicked ? 0.9 : 1} rotation={[0, rotationX, 0]}>
       {/* Modelo 3D real */}
       <primitive object={gltf.scene.clone()} scale={hovered ? creatureInfo.scale * 1.1 : creatureInfo.scale} />
 

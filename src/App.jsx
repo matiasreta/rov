@@ -18,7 +18,7 @@ function App() {
   // Inicializar conteos de criaturas por tipo
   const initializeCreatureCounts = () => {
     const counts = {};
-    getAllCreatureIds().forEach(id => {
+    getAllCreatureIds().forEach((id) => {
       counts[id] = 0;
     });
     return counts;
@@ -60,24 +60,24 @@ function App() {
           sessionStartTime: null,
         };
   });
-  const [diveTimer, setDiveTimer] = useState(120);
+  const [diveTimer, setDiveTimer] = useState(420);
   const [isGameActive, setIsGameActive] = useState(false);
   const timerRef = useRef(null);
 
   const handleStartGame = () => {
     setCurrentScreen("game");
-    setDiveTimer(120);
+    setDiveTimer(420);
     setIsGameActive(true);
-    
+
     // Reiniciar conteos de sesión
     setSessionCreatureCounts(initializeCreatureCounts());
-    
+
     // Generar nuevas misiones si no hay misiones activas
     if (currentMissions.length === 0) {
       const newMissions = getRandomMissions(2);
       setCurrentMissions(newMissions);
     }
-    
+
     setSessionStats((prev) => ({
       ...prev,
       especiesEnSesion: 0,
@@ -120,31 +120,31 @@ function App() {
 
   const handleSpeciesDiscovery = (creatureType) => {
     // Incrementar conteos de sesión
-    setSessionCreatureCounts(prev => ({
+    setSessionCreatureCounts((prev) => ({
       ...prev,
-      [creatureType]: prev[creatureType] + 1
+      [creatureType]: prev[creatureType] + 1,
     }));
 
     // Incrementar conteos totales
-    setTotalCreatureCounts(prev => ({
+    setTotalCreatureCounts((prev) => ({
       ...prev,
-      [creatureType]: prev[creatureType] + 1
+      [creatureType]: prev[creatureType] + 1,
     }));
 
     // Agregar a especies descubiertas si es primera vez
     if (!discoveredSpecies.includes(creatureType)) {
-      setDiscoveredSpecies(prev => [...prev, creatureType]);
+      setDiscoveredSpecies((prev) => [...prev, creatureType]);
     }
 
     // Verificar misiones completadas
     const updatedCounts = {
       ...sessionCreatureCounts,
-      [creatureType]: sessionCreatureCounts[creatureType] + 1
+      [creatureType]: sessionCreatureCounts[creatureType] + 1,
     };
 
-    currentMissions.forEach(mission => {
+    currentMissions.forEach((mission) => {
       if (!completedMissions.includes(mission.id) && isMissionCompleted(mission, updatedCounts)) {
-        setCompletedMissions(prev => [...prev, mission.id]);
+        setCompletedMissions((prev) => [...prev, mission.id]);
         console.log(`¡Misión completada: ${mission.title}!`);
       }
     });
@@ -154,7 +154,7 @@ function App() {
     const timeSinceStart = now - sessionStart;
     const isQuickDiscovery = timeSinceStart < 10000;
 
-    setSessionStats(prev => ({
+    setSessionStats((prev) => ({
       ...prev,
       especies: prev.especies + 1,
       especiesEnSesion: prev.especiesEnSesion + 1,
@@ -165,25 +165,23 @@ function App() {
     const gameStats = {
       totalCreatureCounts: {
         ...totalCreatureCounts,
-        [creatureType]: totalCreatureCounts[creatureType] + 1
+        [creatureType]: totalCreatureCounts[creatureType] + 1,
       },
-      discoveredSpecies: !discoveredSpecies.includes(creatureType) 
-        ? [...discoveredSpecies, creatureType] 
-        : discoveredSpecies,
+      discoveredSpecies: !discoveredSpecies.includes(creatureType) ? [...discoveredSpecies, creatureType] : discoveredSpecies,
       sessionStats: {
         ...sessionStats,
         especies: sessionStats.especies + 1,
         especiesEnSesion: sessionStats.especiesEnSesion + 1,
-        descubrimientoRapido: sessionStats.descubrimientoRapido || isQuickDiscovery
-      }
+        descubrimientoRapido: sessionStats.descubrimientoRapido || isQuickDiscovery,
+      },
     };
 
     const newUnlockedAchievements = getUnlockedAchievements(gameStats);
-    const newAchievementIds = newUnlockedAchievements.map(a => a.id);
+    const newAchievementIds = newUnlockedAchievements.map((a) => a.id);
     const previouslyUnlocked = unlockedAchievements;
-    
+
     // Detectar logros nuevos
-    const newlyUnlocked = newAchievementIds.filter(id => !previouslyUnlocked.includes(id));
+    const newlyUnlocked = newAchievementIds.filter((id) => !previouslyUnlocked.includes(id));
     if (newlyUnlocked.length > 0) {
       setUnlockedAchievements(newAchievementIds);
       console.log(`¡Nuevos logros desbloqueados!`, newlyUnlocked);
@@ -232,20 +230,20 @@ function App() {
   return (
     <div className="app">
       {currentScreen === "home" ? (
-        <HomeScreen 
-          onStartGame={handleStartGame} 
-          playerStats={sessionStats} 
+        <HomeScreen
+          onStartGame={handleStartGame}
+          playerStats={sessionStats}
           discoveredSpecies={discoveredSpecies}
           totalCreatureCounts={totalCreatureCounts}
           completedMissions={completedMissions}
           unlockedAchievements={unlockedAchievements}
         />
       ) : (
-        <OceanScene 
-          onSpeciesDiscovery={handleSpeciesDiscovery} 
-          isGameActive={isGameActive} 
-          diveTimer={diveTimer} 
-          onBackToHome={handleBackToHome} 
+        <OceanScene
+          onSpeciesDiscovery={handleSpeciesDiscovery}
+          isGameActive={isGameActive}
+          diveTimer={diveTimer}
+          onBackToHome={handleBackToHome}
           sessionCreatureCounts={sessionCreatureCounts}
           currentMissions={currentMissions}
           discoveredSpecies={discoveredSpecies}
