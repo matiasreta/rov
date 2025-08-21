@@ -12,7 +12,7 @@ export default function MarineCreature({ position, creatureType, creatureId, onD
   const creatureInfo = getCreatureById(creatureType);
   
   // Cargar el modelo (debe hacerse antes de cualquier return condicional)
-  const gltf = useLoader(GLTFLoader, creatureInfo?.modelPath || '/src/assets/models/Snail.glb');
+  const gltf = useLoader(GLTFLoader, creatureInfo?.modelPath || '/models/Snail.glb');
   
   // useFrame debe ejecutarse siempre, antes de cualquier return condicional
   useFrame((state) => {

@@ -47,7 +47,7 @@ export default function Album({ discoveredSpecies = [], onClose }) {
                     </div>
                     <div className="card-preview">
                       <img 
-                        src={`/src/assets/img/${creature.id}.png`} 
+                        src={`/img/${creature.id}.png`} 
                         alt={creature.name}
                         className="preview-img"
                       />

@@ -2,7 +2,7 @@ import { useTexture } from "@react-three/drei";
 import { RepeatWrapping } from "three";
 
 export default function SandFloor({ size = [400, 400], position = [0, -7, 0] }) {
-  const sandTexture = useTexture("/src/assets/textures/sandfloor.jpg");
+  const sandTexture = useTexture("/textures/sandfloor.jpg");
 
   sandTexture.wrapS = RepeatWrapping;
   sandTexture.wrapT = RepeatWrapping;

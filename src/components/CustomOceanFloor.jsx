@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function CustomOceanFloor() {
   // Cargar la escena GLTF
-  const { scene } = useGLTF("/src/assets/models/scene.glb");
+  const { scene } = useGLTF("/models/scene.glb");
 
   return (
     <group>
@@ -13,4 +13,4 @@ export default function CustomOceanFloor() {
 }
 
 // Precargar el modelo GLTF
-useGLTF.preload("/src/assets/models/scene.glb");
+useGLTF.preload("/models/scene.glb");

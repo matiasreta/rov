@@ -73,7 +73,7 @@ export default function SpeciesCard({ creatureType, onClose }) {
             </div>
 
             <div className="creature-image">
-              <img src={`/src/assets/img/${creatureType}.png`} alt={creatureInfo.name} className="creature-img" />
+              <img src={`/img/${creatureType}.png`} alt={creatureInfo.name} className="creature-img" />
             </div>
 
             <div className="stats-container">

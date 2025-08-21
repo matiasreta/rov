@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/src/assets/img/welcome.png') no-repeat center center;
+  background: url('/img/welcome.png') no-repeat center center;
   background-size: cover;
   z-index: 900;
   overflow-y: auto;
